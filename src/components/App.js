@@ -1,9 +1,10 @@
-import { useDebugValue } from "react";
-import "../styles.css";
-import RecommendationsContainer from "./recommendations/RecommendationsContainer";
-import WatchlistContainer from "./watchlist/WatchlistContainer";
+/* eslint-disable */
 
-// state for movie cards will reside here:
+import React, { useDebugValue, useState, useEffect } from "react";
+import "../styles.css";
+import RecMovieCard from "./RecMovieCard";
+import RecommendationsContainer from "./RecommendationsContainer";
+import WatchlistContainer from "./WatchlistContainer";
 
 // movie title
 // movie released date
@@ -13,11 +14,35 @@ import WatchlistContainer from "./watchlist/WatchlistContainer";
 // edit notes
 // note
 
-export default function App() {
+export default function App(props) {
+  const [movies, setMovies] = useState([]);
+
+  async function getAllMovies() {
+    let allMovies = await axios.get("https://hub.dummyapis.com/vj/wzGUkpZ#");
+    console.log(allMovies.data);
+    setMovies(allMovies.data);
+  }
+
+  //run getAllmovies only once, when page loads
+  useEffect(() => {
+    getAllMovies();
+  }, []);
+
   return (
     <div className="App">
-      <RecommendationsContainer />
-      <WatchlistContainer />
+      {/* <RecommendationsContainer />
+      <WatchlistContainer /> */}
+
+      {/* This will map and render every movie within movies array */}
+      {movies.map((movie) => {
+        return (
+          <RecMovieCard
+            name={movie.name}
+            releasedOn={movie.releasedOn}
+            bannerUrl={movie.bannerUrl}
+          />
+        );
+      })}
     </div>
   );
 }
