@@ -3,7 +3,7 @@ import React from "react";
 function AddToWatchList() {
   return (
     <div>
-      <button>Add to watchlist</button>
+      <p>Add to watchlist</p>
     </div>
   );
 }

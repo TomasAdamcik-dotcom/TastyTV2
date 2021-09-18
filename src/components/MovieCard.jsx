@@ -1,13 +1,21 @@
 import React from "react";
 
 function MovieCard(props) {
+  const WatchListComponent = props.watchListComponent;
   return (
-    // I will use this to render movies - I need have data passed
-
-    <div className="movieCard">
-      <h2>{props.name}</h2>
-      <p>{props.releasedOn}</p>
-      <img src={props.bannerUrl} alt="movie_image" />
+    <div className="moviesContainer">
+      {/* need to map my movies into new array */}
+      {props.movies.map((movie, index) => (
+        <div
+          className="movieCard"
+          onClick={() => props.watchlistHandler(movie)}
+        >
+          <h4>{movie.name}</h4>
+          <p>Released: {movie.releasedOn}</p>
+          <img src={movie.bannerUrl} alt="movie_banner" />
+          <WatchListComponent />
+        </div>
+      ))}
     </div>
   );
 }

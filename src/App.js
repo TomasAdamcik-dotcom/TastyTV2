@@ -3,54 +3,63 @@
 import React, { useDebugValue, useState, useEffect } from "react";
 import "./styles.css";
 import MovieCard from "./components/MovieCard";
-import Header from "./components/Header";
-// import AddToWatchList from "./components/AddToWatchList";
+import Heading from "./components/Heading";
+import AddToWatchList from "./components/AddToWatchList";
+import RemoveFromWatchlist from "./components/RemoveFromWatchlist";
 
 export default function App(props) {
   const [movies, setMovies] = useState([]);
   const [recommended, setRecommended] = useState([]);
-  // const [watchlist, setWatchlist] = useState([]);
+  const [watchlist, setWatchList] = useState([]);
 
-  async function getAllMovies() {
-    let allMovies = await axios.get("https://hub.dummyapis.com/vj/wzGUkpZ#");
-    let moviesArray = allMovies.data;
+  // run axios and set state to movies
+  async function getMovies() {
+    const moviesPromise = await axios.get(
+      "https://hub.dummyapis.com/vj/wzGUkpZ#"
+    );
+    const moviesArray = moviesPromise.data;
     setMovies(moviesArray);
 
     // below is to pick a single recommendation
     let moviesArrayLentgh = Object.keys(moviesArray).length;
     let recomIndex = Math.floor(Math.random() * moviesArrayLentgh);
-    console.log(recomIndex);
-    console.log(moviesArrayLentgh);
     setRecommended(moviesArray[recomIndex]);
+    // console.log(moviesArray[recomIndex]);
   }
 
-  //run getAllmovies only once, when page loads
+  // run getMovies only once, when page loads
   useEffect(() => {
-    getAllMovies();
+    getMovies();
   }, []);
+
+  function addWatchListMovie(movie) {
+    const newWatchlistArray = [...watchlist, movie];
+    setWatchList(newWatchlistArray);
+  }
+
+  function removeWatchListMovie(movie) {
+    // use .filter on watchlist state
+    const newWathcList = watchlist.filter((e) => e.id !== movie.id);
+    setWatchList(newWathcList);
+  }
 
   return (
     <div className="App">
-      <Header title="Recommendation" />
+      <Heading title="Recommendation" />
+      {/* recommendation needs to be resolved similarly to watchlist */}
+      {/* <MovieCard movies={recommended} /> */}
+      <Heading title="All Movies" />
       <MovieCard
-        name={recommended.name}
-        releasedOn={recommended.releasedOn}
-        bannerUrl={recommended.bannerUrl}
+        movies={movies}
+        watchListComponent={AddToWatchList}
+        watchlistHandler={addWatchListMovie}
       />
-      <Header title="All Movies" />
-      {/* This will map and render every movie within movies array */}
-      <div className="moviesSection">
-        {movies.map((movie) => {
-          return (
-            <MovieCard
-              name={movie.name}
-              releasedOn={movie.releasedOn}
-              bannerUrl={movie.bannerUrl}
-            />
-          );
-        })}
-      </div>
-      <Header title="Watchlist" />
+      <Heading title="Watchlist" />
+      <MovieCard
+        movies={watchlist}
+        watchListComponent={RemoveFromWatchlist}
+        watchlistHandler={removeWatchListMovie}
+      />
     </div>
   );
 }
