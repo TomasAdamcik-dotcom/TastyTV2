@@ -2,3 +2,13 @@
   font-family: sans-serif;
   text-align: center;
 }
+
+.moviesSection {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.movieCard {
+  margin: 10px;
+}
