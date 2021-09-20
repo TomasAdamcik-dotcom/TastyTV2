@@ -3,7 +3,7 @@ import React from "react";
 function RemoveFromWatchlist() {
   return (
     <div>
-      <p>Remove from watchlist</p>
+      <button>Remove from watchlist</button>
     </div>
   );
 }
