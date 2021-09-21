@@ -9,14 +9,16 @@ import RemoveFromWatchlist from "./components/RemoveFromWatchlist";
 import Button from "./components/Button";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import CheckAsWatched from "./components/CheckAsWatched";
+import RecommendationCard from "./components/RecommendationCard";
 
 export default function App(props) {
   const [movies, setMovies] = useState([]);
   const [recommended, setRecommended] = useState([]);
   const [watchlist, setWatchList] = useState([]);
   const [notes, setNotes] = useState([]);
+  // const [watched, setWatched] = useState([]);
 
-  // run axios and set state to movies
   async function getMovies() {
     const moviesPromise = await axios.get(
       "https://hub.dummyapis.com/vj/wzGUkpZ#"
@@ -24,22 +26,12 @@ export default function App(props) {
     const moviesArray = moviesPromise.data;
     setMovies(moviesArray);
 
-    // add 3 recommendations
-    // function addRecommendedMovie() {
-    //   const moviesCopy = moviesArray;
-
-    //   for (let i = 0; i < 3; i++) {
-    //     let moviesCopyLentgh = Object.keys(moviesCopy).length;
-    //     let recomIndex = Math.floor(Math.random() * moviesCopyLentgh);
-    //     // add to recommended arr
-    //     console.log(moviesCopy[recomIndex]);
-    //     const newRecomMovies = [...recommended, movies[recomIndex]];
-    //     setRecommended(newRecomMovies);
-    //   }
-    // }
+    // adding recommended movie
+    let moviesCopyLentgh = Object.keys(moviesArray).length;
+    let recomIndex = Math.floor(Math.random() * moviesCopyLentgh);
+    setRecommended(moviesArray[recomIndex]);
   }
 
-  // run getMovies only once, when page loads
   useEffect(() => {
     getMovies();
   }, []);
@@ -59,31 +51,15 @@ export default function App(props) {
     setWatchList([]);
   }
 
-  // function giveRecommendation() {
-  //   const moviesCopy = movies;
-  //   let moviesCopyLentgh = Object.keys(moviesCopy).length;
-  //   let recomIndex = Math.floor(Math.random() * moviesCopyLentgh);
-  //   // add to recommended
-  //   const newRecommendation = moviesCopy[recomIndex];
-  //   console.log(newRecommendation);
-  // function newRecMovies(newRecommendation) {
-  //   setRecommended((prevRecomMovies) => {
-  //     return [...prevRecomMovies, newRecommendation];
-  //   });
-  //   newRecMovies();
-  // }
-
-  //   // RETURNS EMPTY STRING ON FIRST CLICK - THE SAME WHEN IS RAN ON PAGE LOAD
-  //   console.log(recommended);
-  // }
-
-  // useEffect(() => {
-  // giveRecommendation();
-  // }, []);
-
   function addNote(newNote) {
     setNotes((prevNotes) => {
       return [...prevNotes, newNote];
+    });
+  }
+
+  function addToWatched(movie) {
+    setWatched((prevWatched) => {
+      [...watched, movie];
     });
   }
 
@@ -91,18 +67,22 @@ export default function App(props) {
     <body className="App">
       <Header />
       <main>
-        {/* <Heading title="Recommendation" /> */}
-        {/* <Button
-        name="Give me recommendation"
-        buttonHandler={giveRecommendation}
-      /> */}
-        {/* <MovieCard movies={recommended} /> */}
+        <Heading title="Recommended for you" />
+
+        <RecommendationCard
+          movieName={recommended.name}
+          movieRelease={recommended.releasedOn}
+          movieImg={recommended.bannerUrl}
+        />
+
         <Heading title="All Movies" />
         <MovieCard
           movies={movies}
           watchListComponent={AddToWatchList}
           watchlistHandler={addWatchListMovie}
           receiveNote={addNote}
+          watchedComponent={CheckAsWatched}
+          watchedListHandler={addToWatched}
         />
         <Heading title="Watchlist" />
         {/* <ClearWatchlist onClick={clearWatchlist} /> */}

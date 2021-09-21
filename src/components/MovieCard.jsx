@@ -1,20 +1,20 @@
 import React, { useState } from "react";
 
 function MovieCard(props) {
-  const [note, setNote] = useState({ identification: "", comment: "" });
+  // const WatchedComponent = props.watchedComponent;
+  const [note, setNote] = useState([]);
 
   function sendNote(event) {
-    // before SVGAnimatedInteger, append id
     props.receiveNote(note);
     event.preventDefault();
   }
 
   function saveNote(event) {
-    const { indentification, comment } = event.target;
+    const { value } = event.target;
     setNote((oldNote) => {
       return {
         ...oldNote,
-        [indentification]: comment
+        value
       };
     });
   }
@@ -22,20 +22,21 @@ function MovieCard(props) {
   const WatchListComponent = props.watchListComponent;
   return (
     <div className="moviesContainer">
-      {/* need to map my movies into new array */}
       {props.movies.map((movie, index) => (
         <div className="movieCard card">
           <h4>{movie.name}</h4>
           <p>Released: {movie.releasedOn}</p>
           <img src={movie.bannerUrl} alt="movie_banner" />
+
+          {/* ADD TO WATCHLIST */}
           <div onClick={() => props.watchlistHandler(movie)}>
             <WatchListComponent />
           </div>
 
+          {/* NOTES */}
           <form>
             {" "}
             <textarea
-              key={movie.id}
               value={note.content}
               onChange={saveNote}
               cols="15"
@@ -45,6 +46,11 @@ function MovieCard(props) {
             <br />
             <button onClick={sendNote}>Save</button>
           </form>
+
+          {/* WATCHED - crashing when applied */}
+          {/* <div onChange={() => props.watchedListHandler(movie)}>
+            <WatchedComponent />
+          </div> */}
         </div>
       ))}
     </div>
