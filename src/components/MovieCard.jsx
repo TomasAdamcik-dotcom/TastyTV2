@@ -28,7 +28,7 @@ function MovieCard(props) {
           <p>Released: {movie.releasedOn}</p>
           <img src={movie.bannerUrl} alt="movie_banner" />
 
-          {/* ADD TO WATCHLIST */}
+          {/* ADD/REMOVE TO/FROM WATCHLIST */}
           <div onClick={() => props.watchlistHandler(movie)}>
             <WatchListComponent />
           </div>

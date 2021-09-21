@@ -42,7 +42,6 @@ export default function App(props) {
   }
 
   function removeWatchListMovie(movie) {
-    // use .filter on watchlist state
     const newWathcList = watchlist.filter((e) => e.id !== movie.id);
     setWatchList(newWathcList);
   }

@@ -71,8 +71,8 @@ Create user's account to log in and log out.
 
 ### Links
 
+See my project presentation [here.](https://docs.google.com/presentation/d/1ZRFPjZcfP3AUPNWZPhnf3HtN7MVin13JHNSJtp5tbEE/edit#slide=id.p)
 See my project on GitHub [here.](https://github.com/TomasAdamcik-dotcom/TastyTV2)
-
 See my Miro board [here.](https://miro.com/app/board/o9J_l9fwBok=/) for the following information:
 
 - Project brief
@@ -83,5 +83,5 @@ See my Miro board [here.](https://miro.com/app/board/o9J_l9fwBok=/) for the foll
 
 ## List of known issues
 
-- functionality of marking film as watched was not correctly implemented and is not saving watched status.
-- functionality of edit message has not been correctly implemented and user cannot click on edit message
+- functionality of marking film as watched was not correctly implemented and is not saving watched status this has been disabled in project.
+- functionality of edit message has not been correctly implemented and user cannot edit message, only save.
